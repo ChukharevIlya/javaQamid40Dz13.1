@@ -29,10 +29,9 @@ public class ProductManagerTest {
         manager.add(book1);
         manager.add(smartphone1);
         manager.add(book2);
-        manager.matches(book1,"1984");
 
         boolean expected = true;
-        boolean actual = true;
+        boolean actual = manager.matches(book1,"1984");
 
         Assertions.assertEquals(expected, actual);
     }
@@ -43,16 +42,15 @@ public class ProductManagerTest {
         manager.add(book1);
         manager.add(smartphone1);
         manager.add(book2);
-        manager.matches(book1,"Убить пересмешника");
 
         boolean expected = false;
-        boolean actual = false;
+        boolean actual = manager.matches(book1,"Убить пересмешника");
 
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldSearchBy() {
+    public void shouldSearchByIfTwoProducts() {
 
         manager.add(book1);
         manager.add(smartphone1);
@@ -61,6 +59,34 @@ public class ProductManagerTest {
 
         Product[] expected = {book1,book3};
         Product[] actual = manager.searchBy("1984");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSearchIfOneProduct() {
+
+        manager.add(book1);
+        manager.add(smartphone1);
+        manager.add(book2);
+        manager.add(book3);
+
+        Product[] expected = {smartphone1};
+        Product[] actual = manager.searchBy("iPhone 6s");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSearchIf0Products() {
+
+        manager.add(book1);
+        manager.add(smartphone1);
+        manager.add(book2);
+        manager.add(book3);
+
+        Product[] expected = {};
+        Product[] actual = manager.searchBy("Нет такого товара");
 
         Assertions.assertArrayEquals(expected, actual);
     }
